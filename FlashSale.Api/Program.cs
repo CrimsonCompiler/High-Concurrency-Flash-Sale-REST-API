@@ -1,5 +1,8 @@
 using FlashSale.Api.Data;
+using FlashSale.Api.Interfaces;
 using FlashSale.Api.Models;
+using FlashSale.Api.Repositories;
+using FlashSale.Api.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -14,6 +17,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IProductService, ProductService>();
 
 // 3. Controllers & API Setup
 builder.Services.AddControllers();
